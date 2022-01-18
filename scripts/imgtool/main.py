@@ -105,7 +105,7 @@ def keygen(type, key, password):
 
 @click.option('-l', '--lang', metavar='lang', default=valid_langs[0],
               type=click.Choice(valid_langs))
-@click.option('-k', '--key', metavar='filename', required=True)
+@click.option('-k', '--key', metavar='filename', required=True, help='Public key filename or PKCS #11 URI')
 @click.command(help='Dump public key from keypair')
 def getpub(key, lang):
     key = load_key(key)
@@ -138,7 +138,7 @@ def getpriv(key, minimal):
 
 
 @click.argument('imgfile')
-@click.option('-k', '--key', metavar='filename')
+@click.option('-k', '--key', metavar='filename', help='Public key filename or PKCS #11 URI')
 @click.command(help="Check that signed image can be verified by given key")
 def verify(key, imgfile):
     key = load_key(key) if key else None
@@ -289,7 +289,7 @@ class BasedIntParamType(click.ParamType):
 @click.option('--public-key-format', type=click.Choice(['hash', 'full']),
               default='hash', help='In what format to add the public key to '
               'the image manifest: full key or hash of the key.')
-@click.option('-k', '--key', metavar='filename')
+@click.option('-k', '--key', metavar='filename', help='Private key filename or PKCS #11 URI')
 @click.command(help='''Create a signed or unsigned image\n
                INFILE and OUTFILE are parsed as Intel HEX if the params have
                .hex extension, otherwise binary format is used''')
